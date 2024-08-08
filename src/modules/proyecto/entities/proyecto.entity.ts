@@ -47,6 +47,8 @@ export class Proyecto {
     documentos: Documento[];
     @Column({ type: 'varchar', length: 25, nullable: false,default: Status.ACTIVO })
     status: string; 
+    @Column({ type: 'varchar', nullable: true,default: Status.ACTIVO })
+    nota: string; 
     @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
     createdAt: Date;
     @CreateDateColumn({ type: 'timestamp', name: 'updated_at' })

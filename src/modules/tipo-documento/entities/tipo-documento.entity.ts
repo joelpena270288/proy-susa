@@ -17,6 +17,7 @@ import {
   import {Documento} from '../../documentos/entities/documento.entity';
   @Entity('tipos_documentos')
 export class TipoDocumento {
+    @PrimaryGeneratedColumn('uuid')
     id: string;
     @Column({ type: 'varchar', length: 250, nullable: false })
     nombre: string;
