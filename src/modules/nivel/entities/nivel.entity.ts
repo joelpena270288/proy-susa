@@ -14,6 +14,7 @@ import {
   } from 'typeorm';
   import {Parqueo} from '../../parqueo/entities/parqueo.entity';
   import {Edificio} from '../../edificio/entities/edificio.entity';
+  import {Status} from '../../../EntityStatus/entity.estatus.enum';
   @Entity(' niveles') 
 export class Nivel {
     @PrimaryGeneratedColumn('uuid')
@@ -24,6 +25,8 @@ export class Nivel {
     parqueos: Parqueo[];
     @OneToMany(() => Edificio, (edificio) => edificio.nivel)
     edificio: Edificio[];
+    @Column({ type: 'varchar', length: 25, nullable: false,default: Status.ACTIVO })
+    status: string; 
     @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
     createdAt: Date;
     @CreateDateColumn({ type: 'timestamp', name: 'updated_at' })

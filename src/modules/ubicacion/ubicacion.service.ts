@@ -62,7 +62,7 @@ throw new BadRequestException("Error al crear la Ubicacion");
     log.accion = "Editar";
     log.entidad = "Ubicacion";
     log.usuario = user.username;
-    log.mensaje = "Se activo la ubicacion " + found.name;
+    log.mensaje = "Se edito la ubicacion " + found.name;
     await this.logRepository.save(log);
     return await this.ubicacionRepository.save(found);
    }else{

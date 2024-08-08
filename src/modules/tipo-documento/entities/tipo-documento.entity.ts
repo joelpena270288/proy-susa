@@ -20,7 +20,7 @@ export class TipoDocumento {
     @PrimaryGeneratedColumn('uuid')
     id: string;
     @Column({ type: 'varchar', length: 250, nullable: false })
-    nombre: string;
+    name: string;
     @OneToMany(() => Documento, (documento) => documento.tipo)
     documentos: Documento[];
     @Column({ type: 'varchar', length: 25, nullable: false,default: Status.ACTIVO })
