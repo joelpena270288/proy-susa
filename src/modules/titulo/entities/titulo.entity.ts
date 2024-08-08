@@ -12,21 +12,21 @@ import {
     ManyToOne,
     BeforeInsert,
   } from 'typeorm';
- @Entity(' logs') 
-export class Log {
+  import {Proyecto} from '../../proyecto/entities/proyecto.entity';
+  @Entity('titulos') 
+export class Titulo {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    usuario: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    accion: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    entidad: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    mensaje: string;
+    @Column({ type: 'varchar', nullable: false })
+    name: string;    
+    @Column({ type: 'varchar', nullable: false })
+    matricula: string;  
+    @Column({ type: 'varchar', nullable: false })
+    designacion: string;  
+    @ManyToOne(() => Proyecto, (proyecto) => proyecto.titulos)
+    proyecto: Proyecto;
     @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
     createdAt: Date;
     @CreateDateColumn({ type: 'timestamp', name: 'updated_at' })
     updatedAt: Date;
-
 }

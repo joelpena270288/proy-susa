@@ -12,21 +12,14 @@ import {
     ManyToOne,
     BeforeInsert,
   } from 'typeorm';
- @Entity(' logs') 
-export class Log {
+  @Entity(' cisternas') 
+export class Cisterna {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    usuario: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    accion: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    entidad: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    mensaje: string;
+    @Column({ type: 'decimal', nullable: false })
+    capacidad: number;
     @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
     createdAt: Date;
     @CreateDateColumn({ type: 'timestamp', name: 'updated_at' })
     updatedAt: Date;
-
 }

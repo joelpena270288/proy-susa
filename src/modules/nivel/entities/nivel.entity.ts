@@ -12,18 +12,18 @@ import {
     ManyToOne,
     BeforeInsert,
   } from 'typeorm';
- @Entity(' logs') 
-export class Log {
+  import {Parqueo} from '../../parqueo/entities/parqueo.entity';
+  import {Edificio} from '../../edificio/entities/edificio.entity';
+  @Entity(' niveles') 
+export class Nivel {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    usuario: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    accion: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    entidad: string;
-    @Column({ type: 'varchar', length: 100, nullable: false })
-    mensaje: string;
+    @Column({ type: 'varchar', length: 100,unique: true, nullable: false })
+    name: string;
+    @OneToMany(() => Parqueo, (parqueo) => parqueo.nivel)
+    parqueos: Parqueo[];
+    @OneToMany(() => Edificio, (edificio) => edificio.nivel)
+    edificio: Edificio[];
     @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
     createdAt: Date;
     @CreateDateColumn({ type: 'timestamp', name: 'updated_at' })
