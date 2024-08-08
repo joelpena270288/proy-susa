@@ -22,7 +22,7 @@ import { HasRoles } from '../role/roles.decorator';
 import {RoleEnum} from  '../role/enums/role.enum';
 
 import { Status } from '../../EntityStatus/entity.estatus.enum';
-import { Grupo } from '../grupo/entities/grupo.entity';
+
 
 @Injectable()
 export class UsersService {
@@ -30,9 +30,8 @@ export class UsersService {
     @Inject('USER_REPOSITORY')
     private userRepository: Repository<User>,
     @Inject('ROLE_REPOSITORY')
-    private roleRepository: Repository<Role>,
-    @Inject('GRUPO_REPOSITORY')
-    private grupoRepository: Repository<Grupo>,
+    private roleRepository: Repository<Role>
+
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<ReadUserDto> {
@@ -135,14 +134,5 @@ export class UsersService {
     await this.userRepository.save(userExists);
     return plainToClass(ReadUserDto, userExists);
   }
-  async findAllHoster(): Promise<ReadUserDto[]>{
-	 const users: User[] = await this.userRepository
-	  .createQueryBuilder('user')
-	  .innerJoinAndSelect('user.roles','rol')
-	  .where('rol.name = :nameRol',{
-		nameRol: RoleEnum.HOSTER  
-	  })  .getMany();
-	    return users.map((user: User) => plainToClass(ReadUserDto, user));
-	  
-  }
+  
 }

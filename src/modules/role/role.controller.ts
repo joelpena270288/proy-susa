@@ -17,9 +17,9 @@ export class RoleController {
     return this.roleService.create(createRoleDto);
   }
   @HasRoles(
-    RoleEnum.ADMIN,
-    RoleEnum.HOSTER,
-    RoleEnum.VENDEDOR
+    RoleEnum.ADMIN
+
+   
    
   )
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -28,9 +28,8 @@ export class RoleController {
     return this.roleService.findAll();
   }
   @HasRoles(
-    RoleEnum.ADMIN,
-    RoleEnum.HOSTER,
-    RoleEnum.VENDEDOR
+    RoleEnum.ADMIN
+   
    
   )
   @UseGuards(JwtAuthGuard, RolesGuard)
