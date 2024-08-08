@@ -23,6 +23,7 @@ import { UbicacionModule } from './modules/ubicacion/ubicacion.module';
 import { ClienteModule } from './modules/cliente/cliente.module';
 import { ApartamentoModule } from './modules/apartamento/apartamento.module';
 import { ProyectoModule } from './modules/proyecto/proyecto.module';
+import { TipoDocumentoModule } from './modules/tipo-documento/tipo-documento.module';
 
 @Module({
    
@@ -34,7 +35,7 @@ import { ProyectoModule } from './modules/proyecto/proyecto.module';
      RoleModule,    
      AuthModule, 
      
-     LogModule, DocumentosModule, EdificioModule, ParqueoModule, TituloModule, ContratoModule,  NivelModule, PlantaTratamientoModule, CisternaModule, UbicacionModule, ClienteModule, ApartamentoModule, ProyectoModule,
+     LogModule, DocumentosModule, EdificioModule, ParqueoModule, TituloModule, ContratoModule,  NivelModule, PlantaTratamientoModule, CisternaModule, UbicacionModule, ClienteModule, ApartamentoModule, ProyectoModule, TipoDocumentoModule,
   
   
     ]

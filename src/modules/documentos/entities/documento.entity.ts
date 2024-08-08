@@ -13,6 +13,7 @@ import {
     BeforeInsert,
   } from 'typeorm';
   import {Proyecto} from '../../proyecto/entities/proyecto.entity';
+  import {TipoDocumento} from '../../tipo-documento/entities/tipo-documento.entity';
   @Entity('documentos')
 export class Documento {
     @PrimaryGeneratedColumn('uuid')
@@ -23,6 +24,8 @@ export class Documento {
   dir: string; 
   @ManyToOne(() => Proyecto, (proyecto) => proyecto.documentos)
   proyecto: Proyecto;
+  @ManyToOne(() => TipoDocumento, (tipo) => tipo.documentos)
+    tipo: TipoDocumento;
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
   @CreateDateColumn({ type: 'timestamp', name: 'updated_at' })
