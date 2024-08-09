@@ -30,7 +30,7 @@ export class Cliente {
     @Column({ type: 'varchar',length: 16, nullable: true })
     telefono: string;    
     @Column({ type: 'varchar' ,length: 25,unique: true, nullable: false })
-    rcn: string; 
+    rnc: string; 
     @OneToMany(() => Proyecto, (proyecto) => proyecto.cliente)
     proyectos: Proyecto[];
     @Column({ type: 'varchar', length: 25, nullable: false,default: Status.ACTIVO })

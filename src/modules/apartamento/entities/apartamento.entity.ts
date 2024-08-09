@@ -12,15 +12,17 @@ import {
     ManyToOne,
     BeforeInsert,
   } from 'typeorm';
-  import {Edificio} from '../../edificio/entities/edificio.entity';
+  import {Proyecto} from '../../proyecto/entities/proyecto.entity';
   @Entity('apartamentos')
 export class Apartamento {
     @PrimaryGeneratedColumn('uuid')
   id: string;
   @Column({ type: 'int', nullable: false })
   cantidadHabitaciones: number;
-  @ManyToOne(() => Edificio, (edificio) => edificio.apartamentos)
-  edificio: Edificio;
+  @Column({ type: 'int', nullable: false })
+  cantidadAptos: number;
+  @ManyToOne(() => Proyecto, (proyecto) => proyecto.apartamentos)
+  proyecto: Proyecto;
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
   @CreateDateColumn({ type: 'timestamp', name: 'updated_at' })

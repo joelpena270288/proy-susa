@@ -1,26 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateParqueoDto } from './dto/create-parqueo.dto';
 import { UpdateParqueoDto } from './dto/update-parqueo.dto';
+import { Repository } from 'typeorm';
+import { Parqueo } from './entities/parqueo.entity';
+import { Nivel } from '../nivel/entities/nivel.entity';
+import { User } from '../users/entities/user.entity';
+import { Log } from '../log/entities/log.entity';
 
 @Injectable()
 export class ParqueoService {
-  create(createParqueoDto: CreateParqueoDto) {
-    return 'This action adds a new parqueo';
+  constructor(
+    @Inject('PARQUEO_REPOSITORY')
+    private parqueoRepository: Repository<Parqueo>,
+    @Inject('LOG_REPOSITORY')
+    private logRepository: Repository<Log>,
+    @Inject('NIVEL_REPOSITORY')
+    private nivelRepository: Repository<Nivel>
+  ) {}
+
+ 
+ async update(id: string, updateParqueoDto: UpdateParqueoDto,user: User):Promise<Parqueo> {
+    try{
+      const parqueo: Parqueo = await this.parqueoRepository.findOne({where:{id: id}});
+      if(!parqueo){
+        throw new NotFoundException("El Parqueo  Itroducido no es Valido");
+      }
+      const niveles: Nivel[] = new Array();
+      for (let index = 0; index < updateParqueoDto.idNiveles.length; index++) {
+       const nivel = await this.nivelRepository.findOne({where: {id: updateParqueoDto.idNiveles[index]}});
+       if(nivel){
+        niveles.push(nivel);
+       }   
+    }
+    parqueo.niveles = niveles;
+    parqueo.updatedAt = new Date();
+     
+    
+     const log = new Log();
+     log.accion = "Editar";
+     log.entidad = "Parqueo";
+     log.usuario = user.username;
+     log.mensaje = "Se el Parqueo _" + parqueo.id;
+     await this.logRepository.save(log);
+     return await this.parqueoRepository.save(parqueo);
+    }catch{
+      throw new BadRequestException("Error al editar la Planta Tratamiento");
+    }
+     
+    
   }
 
-  findAll() {
-    return `This action returns all parqueo`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} parqueo`;
-  }
-
-  update(id: number, updateParqueoDto: UpdateParqueoDto) {
-    return `This action updates a #${id} parqueo`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} parqueo`;
-  }
 }

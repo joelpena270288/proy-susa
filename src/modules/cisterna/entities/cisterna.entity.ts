@@ -16,7 +16,9 @@ import {
 export class Cisterna {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-    @Column({ type: 'decimal', nullable: false })
+    @Column({ type: 'boolean', nullable: false,default: true })
+    valor: boolean;
+    @Column({ type: 'decimal', nullable: false, precision: 10, scale: 2 })
     capacidad: number;
     @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
     createdAt: Date;

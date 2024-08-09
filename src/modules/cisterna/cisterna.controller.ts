@@ -1,34 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CisternaService } from './cisterna.service';
 import { CreateCisternaDto } from './dto/create-cisterna.dto';
 import { UpdateCisternaDto } from './dto/update-cisterna.dto';
+import { GetUser } from '../auth/user.decorator';
+import { User } from '../users/entities/user.entity';
+import { HasRoles } from '../role/roles.decorator';
+import { RoleEnum } from '../role/enums/role.enum';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../role/guards/roles.guard';
 
 @Controller('cisterna')
 export class CisternaController {
   constructor(private readonly cisternaService: CisternaService) {}
-
-  @Post()
-  create(@Body() createCisternaDto: CreateCisternaDto) {
-    return this.cisternaService.create(createCisternaDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.cisternaService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cisternaService.findOne(+id);
-  }
+  @HasRoles(RoleEnum.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCisternaDto: UpdateCisternaDto) {
-    return this.cisternaService.update(+id, updateCisternaDto);
+  update(@Param('id') id: string, @Body() updateCisternaDto: UpdateCisternaDto,@GetUser() user: User) {
+    return this.cisternaService.update(id, updateCisternaDto,user);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cisternaService.remove(+id);
-  }
 }

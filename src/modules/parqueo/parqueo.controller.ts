@@ -1,34 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { ParqueoService } from './parqueo.service';
 import { CreateParqueoDto } from './dto/create-parqueo.dto';
 import { UpdateParqueoDto } from './dto/update-parqueo.dto';
+import { HasRoles } from '../role/roles.decorator';
+import { RoleEnum } from '../role/enums/role.enum';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../role/guards/roles.guard';
+import { GetUser } from '../auth/user.decorator';
+import { User } from '../users/entities/user.entity';
 
 @Controller('parqueo')
 export class ParqueoController {
   constructor(private readonly parqueoService: ParqueoService) {}
-
-  @Post()
-  create(@Body() createParqueoDto: CreateParqueoDto) {
-    return this.parqueoService.create(createParqueoDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.parqueoService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.parqueoService.findOne(+id);
-  }
-
+  @HasRoles(RoleEnum.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateParqueoDto: UpdateParqueoDto) {
-    return this.parqueoService.update(+id, updateParqueoDto);
+  update(@Param('id') id: string, @Body() updateParqueoDto: UpdateParqueoDto,@GetUser() user: User) {
+    return this.parqueoService.update(id, updateParqueoDto,user);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.parqueoService.remove(+id);
-  }
 }

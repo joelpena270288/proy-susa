@@ -19,6 +19,10 @@ import {
   import {Parqueo} from '../../parqueo/entities/parqueo.entity';
   import {Documento} from '../../documentos/entities/documento.entity';
   import {Status} from '../../../EntityStatus/entity.estatus.enum';
+  import {Edificio} from '../../edificio/entities/edificio.entity';
+  import {Cisterna} from '../../cisterna/entities/cisterna.entity';
+  import {PlantaTratamiento} from '../../planta-tratamiento/entities/planta-tratamiento.entity';
+  import {Apartamento} from '../../apartamento/entities/apartamento.entity';
   @Entity('proyectos')
 export class Proyecto {
     @PrimaryGeneratedColumn('uuid')
@@ -37,12 +41,22 @@ export class Proyecto {
     construccion: number;
     @OneToMany(() => Titulo, (titulo) => titulo.proyecto)
     titulos: Titulo[];
-    @OneToOne(() => Contrato)
+    @OneToMany(() => Contrato, (contrato) => contrato.proyecto)
+    contratos: Contrato[];
+    @OneToOne(() => Edificio)
     @JoinColumn()
-    contrato: Contrato;
+    edificio: Edificio;
+    @OneToMany(() => Apartamento, (apartamento) => apartamento.proyecto,{eager: true, cascade: true})
+    apartamentos: Apartamento[];
     @OneToOne(() => Parqueo)
     @JoinColumn()
     parqueo: Parqueo;
+    @OneToOne(() => Cisterna)
+    @JoinColumn()
+    cisterna: Cisterna;
+    @OneToOne(() => PlantaTratamiento)
+    @JoinColumn()
+    planta: PlantaTratamiento;
     @OneToMany(() => Documento, (documento) => documento.proyecto)
     documentos: Documento[];
     @Column({ type: 'varchar', length: 25, nullable: false,default: Status.ACTIVO })

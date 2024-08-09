@@ -21,10 +21,7 @@ export class Nivel {
     id: string;
     @Column({ type: 'varchar', length: 100,unique: true, nullable: false })
     name: string;
-    @OneToMany(() => Parqueo, (parqueo) => parqueo.nivel)
-    parqueos: Parqueo[];
-    @OneToMany(() => Edificio, (edificio) => edificio.nivel)
-    edificio: Edificio[];
+    
     @Column({ type: 'varchar', length: 25, nullable: false,default: Status.ACTIVO })
     status: string; 
     @CreateDateColumn({ type: 'timestamp', name: 'created_at' })

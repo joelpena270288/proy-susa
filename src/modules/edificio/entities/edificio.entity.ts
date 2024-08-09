@@ -12,23 +12,16 @@ import {
   ManyToOne,
   BeforeInsert,
 } from 'typeorm';
-import {Nivel} from '../../nivel/entities/nivel.entity';
-import {Apartamento} from '../../apartamento/entities/apartamento.entity';
-
 @Entity('edificios')
 export class Edificio {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+  @Column({ type: 'boolean', nullable: false,default: false })
+  valor: boolean;
   @Column({ type: 'int', nullable: false })
   cantidad: number;
   @Column({ type: 'int', nullable: false })
   niveles: number; 
-  @Column({ type: 'int', nullable: false })
-  totalAptos: number;
-  @ManyToOne(() => Nivel, (nivel) => nivel.parqueos)
-  nivel: Nivel;
-  @OneToMany(() => Apartamento, (apartamento) => apartamento.edificio)
-  apartamentos: Apartamento[];
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
   @CreateDateColumn({ type: 'timestamp', name: 'updated_at' })
