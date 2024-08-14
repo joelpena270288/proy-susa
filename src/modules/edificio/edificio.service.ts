@@ -23,10 +23,7 @@ export class EdificioService {
   async update(id: string, updateEdificioDto: UpdateEdificioDto,user: User): Promise<Edificio> {
   try{  
     const edificio: Edificio = await this.edificioRepository.findOne({where: {id: id}});
-    const apartamentoList: Apartamento[] = new Array();
-    if(!edificio){
-      throw new NotFoundException("El edificio introducido no es valido");
-    } 
+    
     edificio.valor = updateEdificioDto.valor; 
     if(edificio.valor){
       edificio.cantidad = updateEdificioDto.cantidad;

@@ -35,7 +35,7 @@ export class UbicacionService {
   log.accion = "Crear";
   log.entidad = "Ubicacion";
   log.usuario = user.username;
-  log.mensaje = "Se creo la ubicacion " + found.name;
+  log.mensaje = "Se creo la ubicacion " + ubicacion.name;
   await this.logRepository.save(log);
   return await this.ubicacionRepository.save(ubicacion);
 }catch {

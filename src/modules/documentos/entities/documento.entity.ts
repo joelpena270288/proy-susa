@@ -18,8 +18,7 @@ import {
 export class Documento {
     @PrimaryGeneratedColumn('uuid')
   id: string;
-  @Column({ type: 'varchar', unique: true, length: 25, nullable: false })
-  name: string; 
+ 
   @Column({ type: 'varchar', unique: true, length: 25, nullable: false })
   dir: string; 
   @ManyToOne(() => Proyecto, (proyecto) => proyecto.documentos)

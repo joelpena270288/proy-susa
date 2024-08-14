@@ -39,7 +39,7 @@ export class TipoDocumentoService {
       log.accion = 'Crear';
       log.entidad = 'Tipo Documento';
       log.usuario = user.username;
-      log.mensaje = 'Se creo El tipo Documento ' + found.name;
+      log.mensaje = 'Se creo El tipo Documento ' + tipo.name;
       await this.logRepository.save(log);
       return await this.tipoRepository.save(tipo);
     } catch {

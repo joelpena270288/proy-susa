@@ -15,6 +15,7 @@ import {
   } from 'typeorm';
   import {Proyecto} from '../../proyecto/entities/proyecto.entity';
   import {Status} from '../../../EntityStatus/entity.estatus.enum';
+  import {TipoDocumento} from './tipo-documento.enum';
   @Entity('clientes')
 export class Cliente {
     @PrimaryGeneratedColumn('uuid')
@@ -28,7 +29,9 @@ export class Cliente {
     @Column({ type: 'varchar', length: 250, nullable: true })
     direccion: string;
     @Column({ type: 'varchar',length: 16, nullable: true })
-    telefono: string;    
+    telefono: string;  
+    @Column({ type: 'varchar', length: 25, nullable: false,default: TipoDocumento.RNC })
+    tipoDocumento: string;   
     @Column({ type: 'varchar' ,length: 25,unique: true, nullable: false })
     rnc: string; 
     @OneToMany(() => Proyecto, (proyecto) => proyecto.cliente)

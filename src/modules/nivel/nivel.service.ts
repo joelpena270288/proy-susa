@@ -18,7 +18,8 @@ export class NivelService {
   ) {}
 async  create(createNivelDto: CreateNivelDto,user: User):Promise<Nivel> {
   const found: Nivel = await this.nivelRepository.findOne({where: {name: createNivelDto.name.toUpperCase()}});
-  try{ if(found){
+  try{ 
+    if(found){
    found.updatedAt = new Date();
    found.status = Status.ACTIVO;
    const log: Log = new Log();
@@ -35,7 +36,7 @@ async  create(createNivelDto: CreateNivelDto,user: User):Promise<Nivel> {
  log.accion = "Crear";
  log.entidad = "Nivel";
  log.usuario = user.username;
- log.mensaje = "Se creo el nivel " + found.name;
+ log.mensaje = "Se creo el nivel " + nivel.name;
  await this.logRepository.save(log);
  return await this.nivelRepository.save(nivel);
 }catch {

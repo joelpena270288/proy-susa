@@ -18,9 +18,9 @@ export class Edificio {
   id: string;
   @Column({ type: 'boolean', nullable: false,default: false })
   valor: boolean;
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: false,default:0 })
   cantidad: number;
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: false,default: 0 })
   niveles: number; 
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;

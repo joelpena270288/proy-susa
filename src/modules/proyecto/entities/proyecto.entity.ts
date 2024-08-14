@@ -43,25 +43,29 @@ export class Proyecto {
     titulos: Titulo[];
     @OneToMany(() => Contrato, (contrato) => contrato.proyecto)
     contratos: Contrato[];
-    @OneToOne(() => Edificio)
+    @OneToOne(() => Edificio,{eager: true,cascade: true})
     @JoinColumn()
     edificio: Edificio;
     @OneToMany(() => Apartamento, (apartamento) => apartamento.proyecto,{eager: true, cascade: true})
     apartamentos: Apartamento[];
-    @OneToOne(() => Parqueo)
+    @OneToOne(() => Parqueo,{eager: true,cascade: true})
     @JoinColumn()
     parqueo: Parqueo;
-    @OneToOne(() => Cisterna)
+	 @Column({ type: 'boolean', nullable: false,default: false})
+    pozo: boolean;
+	@Column({ type: 'int', nullable: false,default: 0})
+    electricidad: number;
+    @OneToOne(() => Cisterna,{eager: true,cascade: true})
     @JoinColumn()
     cisterna: Cisterna;
-    @OneToOne(() => PlantaTratamiento)
+    @OneToOne(() => PlantaTratamiento,{eager: true,cascade: true})
     @JoinColumn()
     planta: PlantaTratamiento;
     @OneToMany(() => Documento, (documento) => documento.proyecto)
     documentos: Documento[];
     @Column({ type: 'varchar', length: 25, nullable: false,default: Status.ACTIVO })
     status: string; 
-    @Column({ type: 'varchar', nullable: true,default: Status.ACTIVO })
+    @Column({ type: 'varchar', nullable: true })
     nota: string; 
     @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
     createdAt: Date;

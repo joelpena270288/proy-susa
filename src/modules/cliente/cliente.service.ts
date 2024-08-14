@@ -18,7 +18,7 @@ export class ClienteService {
 
  async create(createClienteDto: CreateClienteDto,user: User): Promise<Cliente> {
    try{
-    const cliente: Cliente = await this.clienteRepository.findOne({where: {rnc: createClienteDto.rcn}});
+    const cliente: Cliente = await this.clienteRepository.findOne({where: {rnc: createClienteDto.rnc}});
     if(cliente){
      cliente.status = Status.ACTIVO;
      await this.clienteRepository.save(cliente);
@@ -37,13 +37,14 @@ export class ClienteService {
     nuevoCliente.email = createClienteDto.email;
     nuevoCliente.nombre = createClienteDto.nombre;
     nuevoCliente.nombrecontacto = createClienteDto.nombrecontacto;
-    nuevoCliente.rnc = createClienteDto.rcn;
+    nuevoCliente.rnc = createClienteDto.rnc;
     nuevoCliente.telefono = createClienteDto.telefono;
+    nuevoCliente.tipoDocumento = createClienteDto.tipoDocumento;
     const log: Log = new Log();
      log.accion = "Crear";
      log.entidad = "Cliente";
      log.usuario = user.username;
-     log.mensaje = "Se Creo el cliente " + cliente.rnc; 
+     log.mensaje = "Se Creo el cliente " + nuevoCliente.rnc; 
      await this.logRepository.save(log);
      return this.clienteRepository.save(nuevoCliente);
  
@@ -75,7 +76,7 @@ export class ClienteService {
       cliente.email = updateClienteDto.email;
       cliente.nombre = updateClienteDto.nombre;
       cliente.nombrecontacto = updateClienteDto.nombrecontacto;
-      cliente.rnc = updateClienteDto.rcn;
+      cliente.rnc = updateClienteDto.rnc;
       cliente.telefono = updateClienteDto.telefono;
       cliente.updatedAt = new Date();
       const log: Log = new Log();

@@ -59,11 +59,11 @@ export class TituloService {
    log.mensaje = "Se edito el titulo " + found.name +  "del proyecto " + found.proyecto.name; 
    log.usuario = user.username;
    await this.logRepository.save(log);
-   const titulo: Titulo = new Titulo();
-   titulo.designacion = updateTituloDto.designacion;
-   titulo.matricula = updateTituloDto.matricula;
-   titulo.name = updateTituloDto.name;
-   return await this.tituloRepository.save(titulo);
+  
+   found.designacion = updateTituloDto.designacion;
+   found.matricula = updateTituloDto.matricula;
+   found.name = updateTituloDto.name;
+   return await this.tituloRepository.save(found);
     
   
 }
