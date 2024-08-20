@@ -12,6 +12,9 @@ import { Parqueo } from '../parqueo/entities/parqueo.entity';
 import { PlantaTratamiento } from '../planta-tratamiento/entities/planta-tratamiento.entity';
 import { Status } from '../../EntityStatus/entity.estatus.enum';
 import { Ubicacion } from '../ubicacion/entities/ubicacion.entity';
+import { plainToClass } from 'class-transformer';
+import { ReadDocumentoDto } from '../documentos/dto/read-documento.dto';
+import { Documento } from '../documentos/entities/documento.entity';
 
 @Injectable()
 export class ProyectoService {
@@ -82,13 +85,15 @@ async  create(createProyectoDto: CreateProyectoDto,user: User): Promise<Proyecto
     .leftJoinAndSelect('parqueo.niveles','niveles')
     .innerJoinAndSelect('proyecto.cisterna','cisterna')
     .innerJoinAndSelect('proyecto.planta','planta')
-    .leftJoinAndSelect('proyecto.documentos','documentos')	
-    .leftJoinAndSelect('documentos.tipo','tipo')
+   
+   
     .where('proyecto.id = :idProyecto',{idProyecto: id})
     .getOne();
     if(!proyecto){
       throw new NotFoundException("No existe el proyecto suministrado");
     }
+ 
+  
     return proyecto;
   }
 

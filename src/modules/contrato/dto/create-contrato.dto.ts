@@ -1,10 +1,10 @@
 
-import { IsString, IsInt, IsDate, IsEmail } from 'class-validator';
+import { IsString, IsInt, IsDate, IsEmail,IsNotEmpty } from 'class-validator';
 export class CreateContratoDto {
 	
 	  @IsString()
     idProyecto: string;
-    @IsString()
+    @IsNotEmpty()
     name: string;
   
 

@@ -18,13 +18,13 @@ import {
 export class Documento {
     @PrimaryGeneratedColumn('uuid')
   id: string;
- 
-  @Column({ type: 'varchar', unique: true, length: 25, nullable: false })
-  dir: string; 
+  @Column("text") // Use "bytea" for BLOBs in PostgreSQL
+  file_name: string;
+  @Column({ type: 'bytea', unique: true, nullable: false })
+  dir: Buffer; 
   @ManyToOne(() => Proyecto, (proyecto) => proyecto.documentos)
   proyecto: Proyecto;
-  @ManyToOne(() => TipoDocumento, (tipo) => tipo.documentos)
-    tipo: TipoDocumento;
+  
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
   @CreateDateColumn({ type: 'timestamp', name: 'updated_at' })
