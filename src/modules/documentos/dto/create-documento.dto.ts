@@ -1,9 +1,8 @@
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty ,IsString} from "class-validator";
 export class CreateDocumentoDto {
-    @IsNotEmpty()
+    @IsString()
     idProyecto: string;
-    @IsNotEmpty()
+    @IsString()
     name: string;
-    @IsNotEmpty()
-    dir: Buffer;
+  
 }

@@ -20,7 +20,7 @@ export class Documento {
   id: string;
   @Column("text") // Use "bytea" for BLOBs in PostgreSQL
   file_name: string;
-  @Column({ type: 'bytea', unique: true, nullable: false })
+  @Column({ type: 'bytea', nullable: false })
   dir: Buffer; 
   @ManyToOne(() => Proyecto, (proyecto) => proyecto.documentos)
   proyecto: Proyecto;

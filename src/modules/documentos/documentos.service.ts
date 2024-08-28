@@ -19,8 +19,8 @@ export class DocumentosService {
     @Inject('PROYECTO_REPOSITORY')
     private proyectoRepository: Repository<Proyecto>
   ) {}
- async create(createDocumentoDto: CreateDocumentoDto,user: User):Promise<ReadDocumentoDto> {
-   
+ async create(createDocumentoDto:CreateDocumentoDto,data: Buffer, user: User):Promise<ReadDocumentoDto> {
+ 
 
     try{
       const foundProyecto: Proyecto = await this.proyectoRepository.findOne({where: {id: createDocumentoDto.idProyecto}});
@@ -37,12 +37,13 @@ export class DocumentosService {
   
   documento.file_name = createDocumentoDto.name;
   documento.proyecto = foundProyecto;
-  documento.dir = createDocumentoDto.dir;
+  documento.dir = data;
 const result: Documento = await this.documentoRepository.save(documento);
   return plainToClass(ReadDocumentoDto, result);
 
       
-    }catch{
+    }catch(e){
+      console.log(e);
       throw new BadRequestException("No se pudo crear el documento");
 
     }
@@ -70,7 +71,29 @@ const result: Documento = await this.documentoRepository.save(documento);
 
 
 
-  remove(id: string) {
-    return `This action removes a #${id} documento`;
+ async remove(id: string,user: User):Promise<ReadDocumentoDto> {
+ const found: Documento = await this.documentoRepository
+  .createQueryBuilder('documento')
+  .innerJoinAndSelect('documento.proyecto','proyecto')
+  .where('documento.id = :id',{id: id})
+  .getOne();
+  
+  if(!found){
+    throw new NotFoundException("El documento introducido no es valido");
   }
+ try{
+  await this.documentoRepository.remove(found);
+   const log: Log = new Log();
+  log.accion = "Eliminar";
+  log.entidad = "Documento";
+  log.mensaje = "Se elimino el documento " + found.file_name +  "del proyecto " + found.proyecto.name; 
+  log.usuario = user.username;
+  await this.logRepository.save(log);
+  return plainToClass(ReadDocumentoDto, found);
+ }catch{
+  throw new BadRequestException("No se pudo eliminar el documento");
+ }
+
+
+}
 }

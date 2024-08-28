@@ -40,11 +40,12 @@ export class ParqueoService {
      log.accion = "Editar";
      log.entidad = "Parqueo";
      log.usuario = user.username;
-     log.mensaje = "Se el Parqueo _" + parqueo.id;
+     log.mensaje = "Se edito el Parqueo _" + parqueo.id;
      await this.logRepository.save(log);
      return await this.parqueoRepository.save(parqueo);
-    }catch{
-      throw new BadRequestException("Error al editar la Planta Tratamiento");
+    }catch(e){
+      console.log(e);
+      throw new BadRequestException("Error al editar el parqueo");
     }
      
     
